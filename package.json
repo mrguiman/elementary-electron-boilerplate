@@ -1,0 +1,27 @@
+{
+  "name": "soundbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nick-thompson/elementary": "^0.1.7"
+  },
+  "devDependencies": {
+    "electron": "^12.0.5",
+    "nodemon": "^2.0.7"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "**/*.js",
+      "./public/*.*"
+    ],
+    "exec": "npm run start"
+  }
+}
