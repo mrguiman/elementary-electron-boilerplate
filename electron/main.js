@@ -56,7 +56,7 @@ function updateRenderer(window, eventType, data) {
 function handleKeyboardEvents(win, input) {
   const gain = input.type === "keyDown" ? 1 : 0;
 
-  if (!input.isAutoRepeat) {
+  if (!input.isAutoRepeat && input.key === "a") {
     updateSound(win, gain);
   }
 }
