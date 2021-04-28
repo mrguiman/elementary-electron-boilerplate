@@ -10,7 +10,8 @@ This repository is organized in a list of branches that vary in the dependencies
 
 Look into the various branches available and start from there:
 
-- [basic electron-elementary](https://github.com/MrGuiMan/elementary-electron-boilerplate/tree/elementary-electron): Only includes the bare minimum: electron and elementary audio.
+- [basic elementary-electron](https://github.com/MrGuiMan/elementary-electron-boilerplate/tree/elementary-electron): Only includes the bare minimum: electron and elementary audio.
+- [elementary-electron-typescript-react](https://github.com/MrGuiMan/elementary-electron-boilerplate/tree/elementary-electron-typescript-react): Use Elementary and Electron with React and Typescript (Typescript functionality limited for Elementary until typedefinitions are provided)
 
 # Contributing
 
