@@ -1,6 +1,6 @@
 # elementary-electron-boilerplate
 
-Boilerplate(s) to run the elementary audio engine within an electron app.
+Boilerplate(s) to run the [elementary audio](https://www.npmjs.com/package/@nick-thompson/elementary) engine within an [electron](https://www.electronjs.org/) app.
 
 This repository is organized in a list of branches that vary in the dependencies they include.
 
@@ -8,10 +8,31 @@ This repository is organized in a list of branches that vary in the dependencies
 
 # Getting Started
 
-Look into the various branches available and start from there:
+```
+npm install
+npm run dev
+```
 
-- [basic electron-elementary](https://github.com/MrGuiMan/elementary-electron-boilerplate/tree/elementary-electron): Only includes the bare minimum: electron and elementary audio.
+# How it works
+
+- The main process is the electron process (electron/main.js). Upon startup, it:
+  - Spins up the elementary audio engine
+  - Renders index.html in the main window
+  - Listens to keyboard events (with before-input-event) in order to catch keyboard presses asap and give orders to the elementary audio engine
+  - Uses preload.js to make functions available to the front-end code. [This is the more secure way to do things](https://github.com/electron/electron/issues/28504#issuecomment-813321192) but there are alternatives, such as allowing nodeIntegration
+- The elementary audio process starts with audio/main.js and mostly waits for messages sent by the main process
+- The front-end javascript (renderer.js):
+  - Listens to click events to send messages to the main electron process
+  - Receives messages from the main process to update the view
+
+# TODO
+
+-[ ] Figure out application packaging
 
 # Contributing
 
 You're welcome to contribute to this repository in order to improve the quality of the boilerplates by forking and making a pull request
+
+# Acknowledgments
+
+Big thanks to Nick for his help on sorting out elementary audio usage on the discord channel before official release.
