@@ -1,7 +1,7 @@
 {
-  "name": "soundbox",
-  "version": "1.0.0",
-  "description": "",
+  "name": "elementary-electron-boilerplate",
+  "version": "0.1.0",
+  "description": "Boilerplate(s) to run the elementary audio engine within an electron app.",
   "main": "./electron/main.js",
   "scripts": {
     "start": "electron .",
