@@ -41,15 +41,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## How it works
 
-- The main process is the electron process (electron/main.js). Upon startup, it:
-  - Spins up the elementary audio engine
-  - Renders index.html in the main window
+There are 2 main processes used to run the app.
+
+- The Electron process (electron/main.js). Upon startup, it:
+  - Spins up the elementary audio engine as a child process
+  - Renders whatever's running on localhost port 3000 (ergo the react app)
   - Listens to keyboard events (with before-input-event) in order to catch keyboard presses asap and give orders to the elementary audio engine
   - Uses preload.js to make functions available to the front-end code. [This is the more secure way to do things](https://github.com/electron/electron/issues/28504#issuecomment-813321192) but there are alternatives, such as allowing nodeIntegration
 - The elementary audio process starts with audio/main.js and mostly waits for messages sent by the main process
-- The front-end javascript (renderer.js):
-  - Listens to click events to send messages to the main electron process
-  - Receives messages from the main process to update the view
+- The Create-React-App process
+  - Starts in dev mode (using webpack-dev-server) and provides hot reloading for any change made to the react application
+  - Renders the app using the normal react way
+  - Uses functions provided by electron via preload.js using window.electron to send and receive messages from it
 
 ## TODO
 
