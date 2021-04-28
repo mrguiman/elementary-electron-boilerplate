@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [isMakingNoise, setIsMakingNoise] = useState(false);
+  function makeNoise() {
+    setIsMakingNoise(true);
+    (window as any).electron.sendMessage({
+      type: 'emit-sound'
+    });
+  }
+
+  const stopNoise = useCallback(() => {
+    if (isMakingNoise) {
+      (window as any).electron.sendMessage({
+        type: 'stop-sound'
+      });
+      setIsMakingNoise(false);
+    }
+  }, [isMakingNoise]);
+
+  useEffect(() => {
+    document.addEventListener('mouseup', stopNoise);
+    return () => {
+      document.removeEventListener('mouseup', stopNoise);
+    };
+  }, [stopNoise]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>elementary-electron-typescript-react</h1>
+      <p>{'Click on the following button or press "A" on your keyboard to emit a tone'}</p>
+      <button onMouseDown={makeNoise}>Noise me !</button>
+      <p id="tone">No Tone Playing</p>
     </div>
   );
 }

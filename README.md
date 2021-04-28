@@ -1,35 +1,18 @@
-# Getting Started with Create React App
+# elementary-electron-boilerplate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Boilerplate(s) to run the [elementary audio](https://www.npmjs.com/package/@nick-thompson/elementary) engine within an [electron](https://www.electronjs.org/) app.
+
+This repository is organized in a list of branches that vary in the dependencies they include.
+
+**Disclaimer**: I'm brand new to electron so some things may not make much sense while I'm figuring out what works best / is the cleanest.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 ### `npm run eject`
+
+The project was initialized with Create-React-App, so it uses the same eject script.
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -39,8 +22,28 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## How it works
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- The main process is the electron process (electron/main.js). Upon startup, it:
+  - Spins up the elementary audio engine
+  - Renders index.html in the main window
+  - Listens to keyboard events (with before-input-event) in order to catch keyboard presses asap and give orders to the elementary audio engine
+  - Uses preload.js to make functions available to the front-end code. [This is the more secure way to do things](https://github.com/electron/electron/issues/28504#issuecomment-813321192) but there are alternatives, such as allowing nodeIntegration
+- The elementary audio process starts with audio/main.js and mostly waits for messages sent by the main process
+- The front-end javascript (renderer.js):
+  - Listens to click events to send messages to the main electron process
+  - Receives messages from the main process to update the view
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## TODO
+
+- Figure out application packaging
+- Solve Electron CSP Security Warning
+- Solve devtools failed to load sourcemap for preload warning
+
+## Contributing
+
+You're welcome to contribute to this repository in order to improve the quality of the boilerplates by forking and making a pull request
+
+# Acknowledgments
+
+Big thanks to Nick for his help on sorting out elementary audio usage on the discord channel before official release.

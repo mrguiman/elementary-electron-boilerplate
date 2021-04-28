@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "strict": true,
+    "types": ["node"],
+    "sourceMap": true,
+    "outDir": "../build",
+    "baseUrl": "."
+  },
+  "include": [".", "../audio/."],
+  "exclude": ["node_modules"]
+}
