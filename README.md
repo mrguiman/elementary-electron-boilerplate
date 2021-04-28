@@ -1,6 +1,6 @@
 # elementary-electron-boilerplate
 
-Boilerplate(s) to run the [elementary audio](https://www.npmjs.com/package/@nick-thompson/elementary) engine within an [electron](https://www.electronjs.org/) app.
+Boilerplate(s) to run the [elementary audio](https://www.npmjs.com/package/@nick-thompson/elementary) engine within an [electron](https://www.electronjs.org/) app running React. Uses Typescript as a main language.
 
 This repository is organized in a list of branches that vary in the dependencies they include.
 
@@ -9,6 +9,23 @@ This repository is organized in a list of branches that vary in the dependencies
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `start`
+
+Uses concurrently to run the react app and electron / elementary in parralel, thus removing the need to start them independently
+
+### `start:react`
+
+Starts the react app with webpack in BROWSER=NONE mode to be included within the electron wrapper. Since the React app runs with webpack, hot reloading happens within the electron wrapper.
+
+### `build:react`
+
+Generates built files for the react app. Currently useless until we figure out packaging everything for production
+
+### `start:electron`
+
+Compiles and starts the electron app using nodemon to watch for changes within the electron and audio folders.
+The electron app also spins up the elementary audio child process.
 
 ### `npm run eject`
 
