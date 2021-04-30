@@ -58,7 +58,8 @@ There are 2 main processes used to run the app.
 
 - Figure out application packaging
 - Solve Electron CSP Security Warning
-- Solve devtools failed to load sourcemap for preload warning
+- Solve "devtools failed to load sourcemap for preload" warning
+- Find a clean way to share types with CRA (which currently complains when requiring types outside of the src folder)
 
 ## Contributing
 

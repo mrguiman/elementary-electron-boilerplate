@@ -6,7 +6,11 @@ function App() {
   function makeNoise() {
     setIsMakingNoise(true);
     (window as any).electron.sendMessage({
-      type: 'emit-sound'
+      type: 'emit-sound',
+      value: {
+        gain: 1,
+        frequency: 440
+      }
     });
   }
 
@@ -20,9 +24,21 @@ function App() {
   }, [isMakingNoise]);
 
   useEffect(() => {
+    function handleKeydown(e: KeyboardEvent) {
+      switch (e.key) {
+        case 'a':
+          makeNoise();
+          break;
+      }
+    }
+
     document.addEventListener('mouseup', stopNoise);
+    document.addEventListener('keyup', stopNoise);
+    document.addEventListener('keydown', handleKeydown);
     return () => {
       document.removeEventListener('mouseup', stopNoise);
+      document.removeEventListener('keyup', stopNoise);
+      document.removeEventListener('keydown', handleKeydown);
     };
   }, [stopNoise]);
   return (
