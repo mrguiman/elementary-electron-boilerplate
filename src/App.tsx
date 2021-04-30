@@ -3,16 +3,20 @@ import './App.css';
 
 function App() {
   const [isMakingNoise, setIsMakingNoise] = useState(false);
-  function makeNoise() {
-    setIsMakingNoise(true);
-    (window as any).electron.sendMessage({
-      type: 'emit-sound',
-      value: {
-        gain: 1,
-        frequency: 440
-      }
-    });
-  }
+  const [frequency, setFrequency] = useState<string | null>(null);
+
+  const makeNoise = useCallback(() => {
+    if (!isMakingNoise) {
+      setIsMakingNoise(true);
+      (window as any).electron.sendMessage({
+        type: 'emit-sound',
+        value: {
+          gain: 1,
+          frequency: 440
+        }
+      });
+    }
+  }, [isMakingNoise]);
 
   const stopNoise = useCallback(() => {
     if (isMakingNoise) {
@@ -40,13 +44,21 @@ function App() {
       document.removeEventListener('keyup', stopNoise);
       document.removeEventListener('keydown', handleKeydown);
     };
-  }, [stopNoise]);
+  }, [stopNoise, makeNoise]);
+
+  useEffect(() => {
+    (window as any).electron.onUpdate((e: unknown, messageData: any) => {
+      if (messageData.type === 'update') {
+        setFrequency(messageData.value.frequency);
+      }
+    });
+  }, []);
   return (
     <div className="App">
       <h1>elementary-electron-typescript-react</h1>
       <p>{'Click on the following button or press "A" on your keyboard to emit a tone'}</p>
       <button onMouseDown={makeNoise}>Noise me !</button>
-      <p id="tone">No Tone Playing</p>
+      <p id="tone">{frequency ? `${frequency}hz` : 'No Tone Playing'}</p>
     </div>
   );
 }

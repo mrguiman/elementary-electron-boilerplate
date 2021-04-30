@@ -14,15 +14,17 @@ process.on('message', (rawMessage: MessageData) => {
   }
 });
 core.on('load', () => {
-  process.send!('elementary Core Loaded');
+  console.log('elementary Core Loaded');
 });
 
 function emitSound(event: EmitSoundEvent) {
-  process.send!(`Emitting ${event.frequency}hz at gain ${event.gain}`);
+  console.log(`Emitting ${event.frequency}hz at gain ${event.gain}`);
   renderTone(event.gain, event.frequency);
+  process.send!(new MessageData('update', event));
 }
 function stopSound() {
   renderTone(0, 0);
+  process.send!(new MessageData('update', new EmitSoundEvent(0, 0)));
 }
 
 function renderTone(gain: number, frequency: number) {
