@@ -5,21 +5,11 @@ const { fork } = require("child_process");
 const audioEngine = fork("audio/main.js", {
   execPath: "./node_modules/.bin/elementary",
 }).on("message", function (data) {
-  console.log("[elementaryProcess] " + data);
+  const window = BrowserWindow.getFocusedWindow();
+  window && window.webContents.send("update", data);
 });
 
-ipcMain.on("async-message", (_, message) => {
-  const window = BrowserWindow.getFocusedWindow();
-  switch (message.type) {
-    case "stop-sound":
-      updateSound(window, 0);
-      break;
-    case "emit-sound":
-    default:
-      updateSound(window, 1);
-      break;
-  }
-});
+ipcMain.on("async-message", (_, messageData) => audioEngine.send(messageData));
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -32,33 +22,6 @@ function createWindow() {
 
   win.loadFile("public/index.html");
   win.webContents.openDevTools();
-  win.webContents.on("before-input-event", (_, input) =>
-    handleKeyboardEvents(win, input)
-  );
-}
-
-function updateSound(win, gain, frequency = 440) {
-  audioEngine.send({
-    gain: gain,
-    frequency: frequency,
-  });
-
-  updateRenderer(win, "update-tone", gain > 0 ? frequency : null);
-}
-
-function updateRenderer(window, eventType, data) {
-  window.webContents.send("update", {
-    type: eventType,
-    data,
-  });
-}
-
-function handleKeyboardEvents(win, input) {
-  const gain = input.type === "keyDown" ? 1 : 0;
-
-  if (!input.isAutoRepeat && input.key === "a") {
-    updateSound(win, gain);
-  }
 }
 
 app.whenReady().then(() => {

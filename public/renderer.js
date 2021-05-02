@@ -1,26 +1,41 @@
 let emitsSounds = false;
-function onMakeNoiseDown() {
+
+function handleKeydown(e) {
+  if (e.key === "a") {
+    makeNoise();
+  }
+}
+function makeNoise() {
   emitsSounds = true;
   window.electron.sendMessage({
     type: "emit-sound",
+    value: {
+      gain: 1,
+      frequency: 440,
+    },
   });
 }
-function onMouseUp() {
+function stopSound() {
   if (emitsSounds) {
     window.electron.sendMessage({
       type: "stop-sound",
+      value: {
+        gain: 0,
+        frequency: 0,
+      },
     });
     emitsSounds = false;
   }
 }
 window.electron.onUpdate((_, message) => {
-  if (message.type === "update-tone") {
-    document.getElementById("tone").innerHTML = message.data
-      ? `${message.data}hz`
+  document.getElementById("tone").innerHTML =
+    message.type === "emit-sound"
+      ? `${message.value.frequency}hz`
       : "No Tone Playing";
-  }
 });
 document
   .getElementById("makeNoiseButton")
-  .addEventListener("mousedown", onMakeNoiseDown);
-document.addEventListener("mouseup", onMouseUp);
+  .addEventListener("mousedown", makeNoise);
+document.addEventListener("keydown", handleKeydown);
+document.addEventListener("keyup", stopSound);
+document.addEventListener("mouseup", stopSound);
