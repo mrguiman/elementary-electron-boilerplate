@@ -46,9 +46,10 @@ There are 2 main processes used to run the app.
 - The Electron process (electron/main.js). Upon startup, it:
   - Spins up the elementary audio engine as a child process
   - Renders whatever's running on localhost port 3000 (ergo the react app)
-  - Listens to keyboard events (with before-input-event) in order to catch keyboard presses asap and give orders to the elementary audio engine
+  - Listens to messages from the renderer process and forwards them to the audio process
+  - Listens to messages from the audio process and forwards them to the renderer process
   - Uses preload.js to make functions available to the front-end code. [This is the more secure way to do things](https://github.com/electron/electron/issues/28504#issuecomment-813321192) but there are alternatives, such as allowing nodeIntegration
-- The elementary audio process starts with audio/main.js and mostly waits for messages sent by the main process
+- The elementary audio process starts with audio/main.js and mostly waits for messages sent forwarded by the main process
 - The Create-React-App process
   - Starts in dev mode (using webpack-dev-server) and provides hot reloading for any change made to the react application
   - Renders the app using the normal react way
