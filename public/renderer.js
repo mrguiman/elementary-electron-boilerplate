@@ -50,6 +50,11 @@ function maxGain() {
 
 function gainVolume() {
   o.innerHTML = i.value;
+  let step = 0.1;
+  if (i.value <= 0.2){
+    step = 0.01;
+  } 
+  i.setAttribute('step', step);
   window.electron.sendMessage({
     type: "gain-volume",
     value: {
