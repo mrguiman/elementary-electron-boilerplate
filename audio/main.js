@@ -1,4 +1,4 @@
-const core = require("elementary-core");
+const core = elementary.core;
 const el = require("@nick-thompson/elementary");
 
 process.on("message", (messageData) => {

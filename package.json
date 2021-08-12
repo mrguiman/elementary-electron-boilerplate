@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@nick-thompson/elementary": "^0.1.7"
+    "@nick-thompson/elementary": "^0.9.5"
   },
   "devDependencies": {
     "electron": "^12.0.5",

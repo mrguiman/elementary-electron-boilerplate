@@ -3,7 +3,7 @@ const path = require("path");
 const { fork } = require("child_process");
 
 const audioEngine = fork("audio/main.js", {
-  execPath: "./node_modules/.bin/elementary",
+  execPath: "elementary",
 }).on("message", function (data) {
   const window = BrowserWindow.getFocusedWindow();
   window && window.webContents.send("update", data);
