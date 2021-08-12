@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Elementary Volume</title>
     <meta
       http-equiv="Content-Security-Policy"
       content="script-src 'self' 'unsafe-inline';"
@@ -11,10 +11,11 @@
   </head>
   <body>
     <div id="content">
-      <h1>elementary-electron</h1>
-      <p>Click on the following button or press "A" on your keyboard to emit a tone</p>
-      <button id="makeNoiseButton">Noise me !</button>
-      <p id="tone">No Tone Playing</p>
+      <h1>elementary-volume</h1>
+      <input onblur="this.focus()" autofocus id="gainVolume" min="0" max="1" value="0.5" step="0.1" type="range" orient="vertical" onchange="showValue(this.value);"/>
+      <p><output></output></p>
+      <button style="display:none;" id="makeNoiseButton">PLAY</button>
+      <button id="muteButton">MUTE</button>
     </div>
     </p>
     <script src="./renderer.js"></script>
