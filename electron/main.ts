@@ -1,11 +1,12 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import * as path from 'path';
 import { fork } from 'child_process';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { ChildProcess } from 'node:child_process';
+import * as path from 'path';
+
 import MessageData from '../types/MessageData';
 
 const audioEngine: ChildProcess = fork('build/audio/main.js', {
-  execPath: './node_modules/.bin/elementary'
+  execPath: 'elementary'
 }).on('message', function (messageData: MessageData) {
   const window = BrowserWindow.getFocusedWindow();
   window &&

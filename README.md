@@ -6,7 +6,16 @@ This repository is organized in a list of branches that vary in the dependencies
 
 **Disclaimer**: I'm brand new to electron so some things may not make much sense while I'm figuring out what works best / is the cleanest.
 
-## Available Scripts
+## Getting Started
+
+First off, follow the installation guide for elementary audio [from the official website](https://docs.elementary.audio/).
+Elementary needs to be in your path for you to be able to start the app.
+
+Then, run the following command:
+
+```
+npm install
+```
 
 In the project directory, you can run:
 
