@@ -4,14 +4,14 @@
   "private": true,
   "main": "build/electron/main.js",
   "dependencies": {
-    "@nick-thompson/elementary": "^0.9.5",
+    "@nick-thompson/elementary": "^0.9.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "concurrently 'npm run start:electron' 'npm run start:react'",
+    "start": "concurrently \"npm run start:electron\" \"npm run start:react\"",
     "start:electron": "npm run build:electron && nodemon --exec electron .",
     "start:react": "cross-env BROWSER=none react-scripts start",
     "build:electron": "tsc --project ./electron/tsconfig.json",
@@ -53,6 +53,7 @@
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.4",
     "@types/react-dom": "^17.0.3",
+    "@types/nick-thompson__elementary": "^0.9.0",
     "typescript": "^4.2.4"
   },
   "nodemonConfig": {
