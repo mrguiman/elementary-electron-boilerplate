@@ -1,8 +1,10 @@
 import EmitSoundEvent from '../types/EmitSoundEvent';
 import MessageData from '../types/MessageData';
 
-const el: any = require('@nick-thompson/elementary');
-const core = (global as any).elementary.core;
+import * as el from '@nick-thompson/elementary';
+
+declare const global: any;
+const core: el.Core = global.elementary.core;
 
 process.on('message', (rawMessage: MessageData) => {
   switch (rawMessage.type) {

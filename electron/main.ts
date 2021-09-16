@@ -1,6 +1,6 @@
 import { fork } from 'child_process';
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { ChildProcess } from 'node:child_process';
+import { ChildProcess } from 'child_process';
 import * as path from 'path';
 
 import MessageData from '../types/MessageData';
